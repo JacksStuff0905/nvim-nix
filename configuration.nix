@@ -1,0 +1,5 @@
+{pkgs, ...}:
+
+{
+  # nvf config
+}
