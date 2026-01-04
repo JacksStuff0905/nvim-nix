@@ -28,7 +28,10 @@
                 inherit util;
           };
           
-          modules = [ ./configuration.nix ];
+          modules = [ 
+                ./configuration.nix
+                {programs.nvim-nix.enable = true;}
+          ];
         };
       in {
         default = (nvf.lib.neovimConfiguration (neovim-configuration)).neovim;
@@ -56,6 +59,14 @@
                 nvf.nixosModules.default
                 ./configuration.nix
         ];
+
+        # Fix for the scope issues - an dummy option acting as a sink
+        options.vim = lib.mkOption {
+          type = lib.types.attrsOf lib.types.anything;
+          default = {};
+          visible = false;
+          internal = true;
+        };
 
         programs.nvf = {
                 enable = true;
