@@ -78,11 +78,13 @@
         config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
                 enable = true;
                 settings = {
-                        imports = [./configuration.nix];
+                        imports = [
+				./configuration.nix
+				({...}: {_module.args = {
+					inherit util;
+				};})
+			];
 
-                        _module.args = {
-                                inherit util;
-                        };
 
                         programs.nvim-nix = config.programs.nvim-nix;
                 };
