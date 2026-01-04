@@ -54,6 +54,7 @@
       nixosModules.default = { config, pkgs, ... }: {
         imports = [ 
                 nvf.nixosModules.default
+                ./configuration.nix
         ];
 
         programs.nvf = {
@@ -64,6 +65,8 @@
                         _module.args = {
                                 inherit util;
                         };
+
+                        programs.nvim-nix = config.programs.nvim-nix;
                 };
         };
       };
