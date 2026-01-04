@@ -21,7 +21,7 @@
       # Standalone
       packages = forAllSystems (system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        neovim-configuration = (nvf.lib.neovimConfiguration {
+        neovim-configuration = {
           inherit pkgs;
           
           extraSpecialArgs = {
@@ -29,25 +29,25 @@
           };
           
           modules = [ ./configuration.nix ];
-        });
+        };
       in {
         default = neovim-configuration.neovim;
 
         # Basic profile - run with #basic
-        basic = (neovim-configuration
+        basic = (nvf.lib.neovimConfiguration (neovim-configuration
                 // {modules = neovim-configuration.modules ++ [
                     # Modules to be appended
                     ({ ... }: { programs.nvim-nix.profile = "basic"; }) 
                 ];}
-        ).neovim;
+        )).neovim;
 
         # Full profile - run with #full
-        full = (neovim-configuration
+        full = (nvf.lib.neovimConfiguration (neovim-configuration
                 // {modules = neovim-configuration.modules ++ [
                     # Modules to be appended
                     ({ ... }: { programs.nvim-nix.profile = "full"; }) 
                 ];}
-        ).neovim;
+        )).neovim;
       });
 
       # NixOS

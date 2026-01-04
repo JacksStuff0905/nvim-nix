@@ -1,4 +1,7 @@
 {config, lib, pkgs, ...}:
+let
+        default = val: lib.mkOverride 1001 val;
+in
 {
         imports = [
                 ./full.nix
@@ -13,15 +16,16 @@
 
         config.programs.nvim-nix = {
                 opts = {
-                        enable = lib.mkDefault true;
+                        enable = default true;
                 };
 
                 plugins = {
-                        neo-tree.enable = lib.mkDefault true;
+                        neo-tree.enable = default true;
+                        colorizer.enable = default true;
                 };
 
                 languages = {
-                        enable = true;
+                        enable = default true;
                 };
         };
 }

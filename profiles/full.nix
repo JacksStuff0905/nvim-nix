@@ -4,6 +4,8 @@ let
 in
 {
         config.programs.nvim-nix = lib.mkIf (cfg.profile == "full") {
-                opts.enable = true;
+                plugins = {
+                        colorizer.enable = lib.mkDefault true;
+                };
         };
 }
