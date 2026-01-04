@@ -11,41 +11,77 @@
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       
       forAllSystems = nixpkgs.lib.genAttrs systems;
+
+
+      util = {
+              get-import-dir = dir: ignore: import ./util/get-import-dir.nix {lib = nixpkgs.lib; inherit dir; inherit ignore;};
+      };
     in {
     
       # Standalone
       packages = forAllSystems (system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        
-        # Build neovim with nvf
-        configured-neovim = nvf.lib.neovimConfiguration {
+        neovim-configuration = (nvf.lib.neovimConfiguration {
           inherit pkgs;
+          
+          extraSpecialArgs = {
+                inherit util;
+          };
+          
           modules = [ ./configuration.nix ];
-        };
+        });
       in {
-        default = configured-neovim.neovim;
+        default = neovim-configuration.neovim;
+
+        # Basic profile - run with #basic
+        basic = (neovim-configuration
+                // {modules = neovim-configuration.modules ++ [
+                    # Modules to be appended
+                    ({ ... }: { programs.nvim-nix.profile = "basic"; }) 
+                ];}
+        ).neovim;
+
+        # Full profile - run with #full
+        full = (neovim-configuration
+                // {modules = neovim-configuration.modules ++ [
+                    # Modules to be appended
+                    ({ ... }: { programs.nvim-nix.profile = "full"; }) 
+                ];}
+        ).neovim;
       });
 
       # NixOS
-      nixosModules.default = { config, pkgs, ... }: {
-        imports = [ nvf.nixosModules.default ];
+      nixosModules.default = { config, pkgs, util, ... }: {
+        imports = [ 
+                nvf.nixosModules.default
+        ];
 
         programs.nvf = {
-          enable = true;
+                enable = true;
+                settings = {
+                        imports = [./configuration.nix];
 
-          settings = ./configuration.nix;
+                        _module.args = {
+                                inherit util;
+                        };
+                };
         };
       };
       
       # Home Manager
-      homeManagerModules.default = { config, pkgs, ... }: {
-        imports = [ nvf.homeManagerModules.default ];
-
-        programs.nvf = {
-          enable = true;
-
-          settings = ./configuration.nix;
+      homeManagerModules.default = { config, pkgs, util, ... }: {
+                imports = [ 
+                        nvf.homeManagerModules.default
+                ];
+                programs.nvf = {
+                        enable = true;
+                        settings = {
+                                imports = [./configuration.nix];
+                                _module.args = {
+                                        inherit util;
+                                };
+                        };
+                };
         };
-      };
     };
 }
