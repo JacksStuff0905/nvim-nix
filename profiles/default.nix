@@ -14,7 +14,7 @@ in
         };
 
 
-        config.programs.nvim-nix = lib.mkIf config.programs.nvim-nix.enable {
+        config.programs.nvim-nix = {
                 opts = {
                         enable = default true;
                 };

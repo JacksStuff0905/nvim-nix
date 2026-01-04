@@ -71,7 +71,7 @@
           internal = true;
         };
 
-        programs.nvf = {
+        config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
                 enable = true;
                 settings = {
                         imports = [./configuration.nix];
