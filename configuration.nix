@@ -13,7 +13,6 @@ in
         ];
 
         options.programs.nvim-nix = {
-                test = lib.mkEnableOption "";
                 enable = lib.mkEnableOption "Enable the nvim-nix module";
         };
 

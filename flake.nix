@@ -63,6 +63,10 @@
                 ./configuration.nix
         ];
 
+	_module.args = {
+		inherit util;
+	};
+
         # Fix for the scope issues - an dummy option acting as a sink
         options.vim = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
