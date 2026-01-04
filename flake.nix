@@ -61,11 +61,13 @@
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
+		({...}:{
+			_module.args = {
+				inherit util;
+			};
+		})
         ];
 
-	_module.args = {
-		inherit util;
-	};
 
         # Fix for the scope issues - an dummy option acting as a sink
         options.vim = lib.mkOption {
@@ -78,13 +80,11 @@
         config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
                 enable = true;
                 settings = {
-                        imports = [
-				./configuration.nix
-				({...}: {_module.args = {
-					inherit util;
-				};})
-			];
+                        imports = [./configuration.nix];
 
+                        _module.args = {
+                                inherit util;
+                        };
 
                         programs.nvim-nix = config.programs.nvim-nix;
                 };
