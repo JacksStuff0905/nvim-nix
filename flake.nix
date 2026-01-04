@@ -31,7 +31,7 @@
           modules = [ ./configuration.nix ];
         };
       in {
-        default = neovim-configuration.neovim;
+        default = (nvf.lib.neovimConfiguration (neovim-configuration)).neovim;
 
         # Basic profile - run with #basic
         basic = (nvf.lib.neovimConfiguration (neovim-configuration
