@@ -19,10 +19,6 @@
         neovim-configuration = {
           inherit pkgs;
           
-          extraSpecialArgs = {
-                inherit util;
-          };
-          
           modules = [ 
                 ./configuration.nix
                 {programs.nvim-nix.enable = true;}
