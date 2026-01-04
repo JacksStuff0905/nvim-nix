@@ -54,17 +54,16 @@
       nixosModules.default = { config, pkgs, ... }: {
         imports = [ 
                 nvf.nixosModules.default
+                ./configuration.nix
         ];
+
+        _module.args = {
+                inherit util;
+        };
+
 
         programs.nvf = {
                 enable = true;
-                settings = {
-                        imports = [./configuration.nix];
-
-                        _module.args = {
-                                inherit util;
-                        };
-                };
         };
       };
       
