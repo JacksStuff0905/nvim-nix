@@ -61,11 +61,11 @@
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
-		({...}:{
+		{
 			_module.args = {
 				inherit util;
 			};
-		})
+		}
         ];
 
 
