@@ -76,16 +76,34 @@
       };
       
       # Home Manager
-      homeManagerModules.default = { config, pkgs, ... }: {
-                imports = [ 
-                        nvf.homeManagerModules.default
-                ];
-                programs.nvf = {
-                        enable = true;
-                        settings = {
-                                imports = [./configuration.nix];
-                        };
+      homeManagerModules.default =
+      let 
+                lib = nixpkgs.lib;
+      in { config, pkgs, ... }: {
+        imports = [ 
+                nvf.homeManagerModules.default
+                ./configuration.nix
+        ];
+
+
+        # Fix for the scope issues - an dummy option acting as a sink
+        options.vim = lib.mkOption {
+          type = lib.types.attrsOf lib.types.anything;
+          default = {};
+          visible = false;
+          internal = true;
+        };
+
+        config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
+                enable = true;
+                settings = {
+                        imports = [
+				./configuration.nix
+			];
+
+                        programs.nvim-nix = config.programs.nvim-nix;
                 };
         };
+      };
     };
 }
