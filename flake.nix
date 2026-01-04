@@ -54,7 +54,10 @@
       });
 
       # NixOS
-      nixosModules.default = { config, pkgs, ... }: {
+      nixosModules.default = 
+      let 
+                lib = nixpkgs.lib;
+      in { config, pkgs, ... }: {
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
