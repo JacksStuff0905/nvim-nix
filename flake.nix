@@ -51,7 +51,7 @@
       });
 
       # NixOS
-      nixosModules.default = { config, pkgs, util, ... }: {
+      nixosModules.default = { config, pkgs, ... }: {
         imports = [ 
                 nvf.nixosModules.default
         ];
@@ -69,7 +69,7 @@
       };
       
       # Home Manager
-      homeManagerModules.default = { config, pkgs, util, ... }: {
+      homeManagerModules.default = { config, pkgs, ... }: {
                 imports = [ 
                         nvf.homeManagerModules.default
                 ];

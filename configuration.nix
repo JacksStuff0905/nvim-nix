@@ -1,6 +1,6 @@
 {config, pkgs, lib, ...}:
 let
-        cfg = config.nvim-nix;
+        cfg = config.programs.nvim-nix;
 in
 {
         imports = [
@@ -9,9 +9,11 @@ in
                 ./modules/plugins
                 ./modules/opts
                 ./modules/keymaps
+                ./modules/themes
         ];
 
-        options.nvim-nix = {
+        options.programs.nvim-nix = {
+                test = lib.mkEnableOption "";
         };
 
         config.vim = {
