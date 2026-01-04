@@ -11,11 +11,6 @@
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       
       forAllSystems = nixpkgs.lib.genAttrs systems;
-
-
-      util = {
-              get-import-dir = dir: ignore: import ./util/get-import-dir.nix {lib = nixpkgs.lib; inherit dir; inherit ignore;};
-      };
     in {
     
       # Standalone
@@ -61,11 +56,6 @@
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
-		{
-			_module.args = {
-				inherit util;
-			};
-		}
         ];
 
 
@@ -82,11 +72,6 @@
                 settings = {
                         imports = [
 				./configuration.nix
-				{
-					_module.args = {
-						inherit util;
-					};
-				}
 			];
 
                         programs.nvim-nix = config.programs.nvim-nix;
@@ -103,9 +88,6 @@
                         enable = true;
                         settings = {
                                 imports = [./configuration.nix];
-                                _module.args = {
-                                        inherit util;
-                                };
                         };
                 };
         };

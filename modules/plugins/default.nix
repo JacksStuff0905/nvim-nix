@@ -1,10 +1,12 @@
-{util, ...}:
+{...}:
 
 let
   file_to_not_import = [
     "default.nix"
   ];
+
+  get-import-dir = dir: ignore: import ./util/get-import-dir.nix {lib = nixpkgs.lib; inherit dir; inherit ignore;};
 in
 {
-  imports = util.get-import-dir ./. file_to_not_import;
+  imports = get-import-dir ./. file_to_not_import;
 }
