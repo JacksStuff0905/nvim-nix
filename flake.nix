@@ -89,10 +89,6 @@
 				}
 			];
 
-                        _module.args = {
-                                inherit util;
-                        };
-
                         programs.nvim-nix = config.programs.nvim-nix;
                 };
         };
