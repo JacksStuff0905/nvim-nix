@@ -17,7 +17,7 @@ in
                         down = lib.mkOption { type = lib.types.str; default = "J"; };
                         up = lib.mkOption { type = lib.types.str; default = "K"; };
 
-                        previous = lib.mkOption { type = lib.types.str; default = "<leader>bc"; };
+                        previous = lib.mkOption { type = lib.types.str; default = "<leader>bk"; };
                         next = lib.mkOption { type = lib.types.str; default = "<leader>fw"; };
                 };
 
