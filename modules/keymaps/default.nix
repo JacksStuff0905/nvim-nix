@@ -20,20 +20,30 @@ in
                         previous = lib.mkOption { type = lib.types.str; default = "<leader>bc"; };
                         next = lib.mkOption { type = lib.types.str; default = "<leader>fw"; };
                 };
+
+                search-highlighting = {
+                        enable = lib.mkOption { type = lib.types.bool; default = true; };
+
+                        key = lib.mkOption { type = lib.types.str; default = "<leader>nh"; };
+                };
         };
 
 
         config.vim.keymaps = lib.mkIf cfg.enable (lib.mkMerge [
                 # Configure window navigation
                 (lib.mkIf cfg.window-navigation.enable [
-                        { key = "H"; mode = "n"; action = "<C-w>h"; }
-                        { key = "J"; mode = "n"; action = "<C-w>j"; }
-                        { key = "K"; mode = "n"; action = "<C-w>k"; }
-                        { key = "L"; mode = "n"; action = "<C-w>l"; }
+                        { key = cfg.window-navigation.left; mode = "n"; action = "<C-w>h"; }
+                        { key = cfg.window-navigation.down; mode = "n"; action = "<C-w>j"; }
+                        { key = cfg.window-navigation.up; mode = "n"; action = "<C-w>k"; }
+                        { key = cfg.window-navigation.right; mode = "n"; action = "<C-w>l"; }
 
-                        { key = "<leader>bc"; mode = "n"; action = "<C-o>"; }
-                        { key = "<leader>fw"; mode = "n"; action = "<C-i>"; }
+                        { key = cfg.window-navigation.previous; mode = "n"; action = "<C-o>"; }
+                        { key = cfg.window-navigation.next; mode = "n"; action = "<C-i>"; }
                 ])
- 
+
+                # Configure seach highlighting
+                (lib.mkIf cfg.search-highlighting.enable [
+                        { key = cfg.search-highlighting.key; mode = "n"; action = ":noh<CR>"; }
+                ])
         ]);
 }
