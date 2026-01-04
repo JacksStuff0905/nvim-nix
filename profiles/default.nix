@@ -29,6 +29,7 @@ in
                         git.enable = default false;
                         telescope.enable = default true;
                         sudo.enable = default true;
+                        splash.enable = default true;
                 };
 
                 languages = {
