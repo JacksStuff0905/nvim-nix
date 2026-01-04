@@ -45,10 +45,7 @@
       });
 
       # NixOS
-      nixosModules.default = 
-      let 
-                lib = nixpkgs.lib;
-      in { config, pkgs, ... }: {
+      nixosModules.default = { config, pkgs, lib, ... }: {
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
@@ -76,10 +73,7 @@
       };
       
       # Home Manager
-      homeManagerModules.default =
-      let 
-                lib = nixpkgs.lib;
-      in { config, pkgs, ... }: {
+      homeManagerModules.default = { config, pkgs, lib, ... }: {
         imports = [ 
                 nvf.homeManagerModules.default
                 ./configuration.nix
@@ -94,15 +88,21 @@
           internal = true;
         };
 
-        config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
-                enable = true;
-                settings = {
-                        imports = [
-				./configuration.nix
-			];
+        config = lib.mkIf config.programs.nvim-nix.enable {
+                programs.nvf = {
+                        enable = true;
+                        settings = {
+                                imports = [
+                                        ./configuration.nix
+                                ];
 
-                        programs.nvim-nix = config.programs.nvim-nix;
+                                programs.nvim-nix = config.programs.nvim-nix;
+                        };
                 };
+
+                home.packages = [
+                        (lib.hiPrio config.programs.nvf.finalPackage)
+                ];
         };
       };
     };
