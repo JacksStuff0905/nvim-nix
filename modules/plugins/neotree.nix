@@ -1,10 +1,12 @@
 {config, pkgs, lib, ...}:
 let
-        cfg = config.programs.nvim-nix.plugins.neo-tree;
+        name = "neo-tree";
+
+        cfg = config.programs.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.neo-tree = {
-                enable = lib.mkEnableOption "Enable neo-tree plugin module";
+        options.programs.nvim-nix.plugins.${name} = {
+                enable = lib.mkEnableOption "Enable ${name} plugin module";
                 keymaps = {
                         enable = lib.mkOption {
                                 type = lib.types.bool;

@@ -8,6 +8,7 @@ in
                 ./modules/languages
                 ./modules/plugins
                 ./modules/opts
+                ./modules/keymaps
         ];
 
         options.nvim-nix = {

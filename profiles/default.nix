@@ -19,9 +19,15 @@ in
                         enable = default true;
                 };
 
+                global-keymaps = {
+                        enable = default true;
+                };
+
                 plugins = {
                         neo-tree.enable = default true;
-                        colorizer.enable = default true;
+                        colorizer.enable = default false;
+                        git.enable = default false;
+                        telescope.enable = default true;
                 };
 
                 languages = {

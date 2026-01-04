@@ -1,10 +1,12 @@
 {config, lib, pkgs, ...}:
 let
-        cfg = config.programs.nvim-nix.plugins.colorizer;
+        name = "colorizer";
+
+        cfg = config.programs.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.colorizer = {
-                enable = lib.mkEnableOption "Enable colorizer plugin module";
+        options.programs.nvim-nix.plugins.${name} = {
+                enable = lib.mkEnableOption "Enable ${name} plugin module";
 
                 auto-attach = lib.mkOption {
                         type = lib.types.bool;
@@ -47,7 +49,6 @@ in
                                event = [ "BufReadPost" "BufNewFile" ];
                                callback = lib.generators.mkLuaInline ''
                                        function()
-                                               print("testest")
                                                require("colorizer").attach_to_buffer(0)
                                        end
                                '';
