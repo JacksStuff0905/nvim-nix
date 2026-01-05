@@ -7,6 +7,7 @@ in
                 plugins = {
                         colorizer.enable = lib.mkDefault false;
                         git.enable = lib.mkDefault false;
+                        rename.enable = lib.mkDefault false;
                 };
         };
 }

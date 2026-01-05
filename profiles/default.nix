@@ -31,6 +31,7 @@ in
                         sudo.enable = default true;
                         splash.enable = default true;
                         lualine.enable = default true;
+                        rename.enable = default false;
                 };
 
                 languages = {
