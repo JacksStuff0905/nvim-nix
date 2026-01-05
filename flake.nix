@@ -80,7 +80,7 @@
         ];
 
 
-        # Fix for the scope issues - an dummy option acting as a sink
+        # Fix for the scope issues - a dummy option acting as a sink
         options.vim = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
           default = {};
