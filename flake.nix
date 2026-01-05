@@ -75,9 +75,9 @@
                 };
 
                 # Set shell aliases
-                environment.shellAliases = lib.mkMerge (
+                /*environment.shellAliases = lib.mkMerge (
                         builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
-                );
+                );*/
         };
       };
       
