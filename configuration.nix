@@ -17,11 +17,6 @@ in
         };
 
         config.vim = {
-                theme = {
-                        enable = true;
-                        name = "dracula";
-                        style = "dark";
-                };
 
         };
 }

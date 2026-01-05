@@ -23,6 +23,10 @@ in
                         enable = default true;
                 };
 
+                themes = {
+                        enable = default true;
+                };
+
                 plugins = {
                         neo-tree.enable = default true;
                         colorizer.enable = default false;
