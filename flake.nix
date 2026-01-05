@@ -109,7 +109,7 @@
 
                 # Set shell aliases
                 home.shellAliases = lib.mkMerge (
-                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
+                        #builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
                         {nvim="echo \"test\"";}
                 );
         };
