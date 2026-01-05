@@ -12,15 +12,35 @@ in
                         default = " ";
                 };
 
-                clipboard-registers = lib.mkOption {
-                        type = lib.types.str;
-                        default = "unnamedplus";
+                clipboard = {
+                        enable = lib.mkOption {
+                                type = lib.types.bool;
+                                default = true;
+                        };
+
+                        registers = lib.mkOption {
+                                type = lib.types.str;
+                                default = "unnamedplus";
+                        };
+
+                        providers = {
+                                wl-copy.enable = lib.mkOption {
+                                        type = lib.types.bool;
+                                        default = true;
+                                };
+
+                                xclip.enable = lib.mkOption {
+                                        type = lib.types.bool;
+                                        default = true;
+                                };
+                        };
                 };
+                
         };
 
 
         config.vim = lib.mkIf cfg.enable {
                 globals.mapleader = cfg.leader;
-                clipboard.registers = cfg.clipboard-registers;
+                clipboard = cfg.clipboard;
         };
 }
