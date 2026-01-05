@@ -7,6 +7,12 @@ in
         options.programs.nvim-nix.opts = {
                 enable = lib.mkEnableOption "Enable the opts module";
 
+                aliases = lib.mkOption {
+                        type = lib.types.listOf lib.types.str;
+                        default = [ "nvim" ];
+                        description = "The shell aliases to use for this config";
+                };
+
                 leader = lib.mkOption {
                         type = lib.types.str;
                         default = " ";

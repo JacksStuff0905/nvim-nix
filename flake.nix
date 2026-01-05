@@ -60,15 +60,22 @@
           internal = true;
         };
 
-        config.programs.nvf = lib.mkIf config.programs.nvim-nix.enable {
-                enable = true;
-                settings = {
-                        imports = [
-				./configuration.nix
-			];
+        config = lib.mkIf config.programs.nvim-nix.enable {
+                programs.nvf = {
+                        enable = true;
+                        settings = {
+                                imports = [
+                                        ./configuration.nix
+                                ];
 
-                        programs.nvim-nix = config.programs.nvim-nix;
+                                programs.nvim-nix = config.programs.nvim-nix;
+                        };
                 };
+
+                # Set shell aliases
+                environment.shellAliases = lib.mkMerge (
+                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
+                );
         };
       };
       
@@ -100,9 +107,10 @@
                         };
                 };
 
-                home.packages = [
-                        (lib.hiPrio config.programs.nvf.finalPackage)
-                ];
+                # Set shell aliases
+                home.shellAliases = lib.mkMerge (
+                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
+                );
         };
       };
     };
