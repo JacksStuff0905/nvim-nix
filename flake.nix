@@ -69,6 +69,8 @@
                                 ];
 
                                 programs.nvim-nix = config.programs.nvim-nix;
+
+                                vim.cmdAlias = "nvim-nix-nixos";
                         };
                 };
 
@@ -104,6 +106,8 @@
                                 ];
 
                                 programs.nvim-nix = config.programs.nvim-nix;
+
+                                vim.cmdAlias = "nvim-nix-home-manager";
                         };
                 };
 
