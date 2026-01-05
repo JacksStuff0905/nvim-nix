@@ -30,6 +30,7 @@ in
                         telescope.enable = default true;
                         sudo.enable = default true;
                         splash.enable = default true;
+                        lualine.enable = default true;
                 };
 
                 languages = {
