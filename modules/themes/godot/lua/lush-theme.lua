@@ -290,6 +290,6 @@ local theme = lush(function(injected_functions)
 end)
 
 -- Return our parsed theme for extension or use elsewhere.
-return theme
+lush(theme)
 
 -- vi:nowrap

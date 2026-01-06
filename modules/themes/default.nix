@@ -29,7 +29,7 @@ in
                 
                 override = {
                         enable = lib.mkEnableOption "Enable the theme override" ;
-                        theme = lib.mkOption {
+                        theme = {
                                 name = lib.mkOption {
                                         type = lib.types.str;
                                         description = "The theme that should be used instead of the system theme";
