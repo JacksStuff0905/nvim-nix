@@ -19,7 +19,7 @@ in
                 theme = {
                         name = lib.mkOption {
                                 type = lib.types.str;
-                                default = "dracula";
+                                default = "godot";
                         };
                         style = lib.mkOption {
                                 type = lib.types.enum ["light" "dark"];

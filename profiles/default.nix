@@ -25,14 +25,6 @@ in
 
                 themes = {
                         enable = default true;
-                        #theme.name = "godot";
-                        override = {
-                                enable = default true;
-                                theme = {
-                                        name = "godot";
-                                        style = "dark";
-                                };
-                        };
                 };
 
                 plugins = {
