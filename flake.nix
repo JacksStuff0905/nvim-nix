@@ -55,7 +55,7 @@
                 {
                   config.assertions = lib.mkForce [];
                   config.warnings = lib.mkForce [];
-                  config._module.check = false;
+                  config._module.check = lib.mkForce false;
                 })
         ];
 
@@ -98,7 +98,7 @@
                 {
                   config.assertions = lib.mkForce [];
                   config.warnings = lib.mkForce [];
-                  config._module.check = false;
+                  config._module.check = lib.mkForce false;
                 })
         ];
 
