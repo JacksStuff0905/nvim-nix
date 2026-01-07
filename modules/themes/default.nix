@@ -18,7 +18,7 @@ in
                 enable = lib.mkEnableOption "Enable theme managment module";
 
                 
-                # This value will be automatically set if using either the HM or NixOS module
+                # This value should be automatically set if using either the HM or NixOS module
                 theme = {
                         name = lib.mkOption {
                                 type = lib.types.str;
