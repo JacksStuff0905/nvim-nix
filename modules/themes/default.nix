@@ -58,7 +58,7 @@ in
                         # The theme should be considered a builtin theme 
                         theme = {
                                 enable = true;
-                                name = theme.name;
+                                name = (builtins.trace theme.name theme.name);
                                 style = theme.style;
                         };
                 }
