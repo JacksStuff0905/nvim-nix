@@ -2,9 +2,7 @@
 let
         cfg = config.programs.nvim-nix.themes;
 
-        custom-themes = [
-                "godot"
-        ];
+        custom-themes = builtins.attrNames (builtins.readDir ./available-themes);
 
         theme = import ./get-theme.nix config;
 
@@ -53,7 +51,7 @@ in
                                 enable = false;
                         };
 
-                        extraPlugins = load-lush-theme (./. + ("/" + theme.name));
+                        extraPlugins = load-lush-theme (./available-themes + ("/" + theme.name));
                 }
                 else
                 {
