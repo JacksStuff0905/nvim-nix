@@ -7,10 +7,15 @@ let
         ];
 
         theme = import ./get-theme.nix config;
+
+        load-lush-theme = path: import ./load-lush-theme.nix {
+                inherit pkgs;
+                inherit theme;
+                inherit path;
+        };
+        
 in
 {
-        imports = builtins.map (name: ./. + ("/" + name)) custom-themes;
-
         options.programs.nvim-nix.themes = {
                 enable = lib.mkEnableOption "Enable theme managment module";
 
@@ -25,30 +30,39 @@ in
                                 type = lib.types.enum ["light" "dark"];
                                 default = "dark";
                         };
-                };
-                
-                override = {
-                        enable = lib.mkEnableOption "Enable the theme override" ;
-                        theme = {
-                                name = lib.mkOption {
-                                        type = lib.types.str;
-                                        description = "The theme that should be used instead of the system theme";
-                                };
-                                style = lib.mkOption {
-                                        type = lib.types.enum ["light" "dark"];
-                                        default = "dark";
-                                };
+                        path = lib.mkOption {
+                                type = lib.types.nullOr lib.types.path;
+                                default = null;
                         };
                 };
         };
 
 
-        config.vim = lib.mkIf (cfg.enable && !(builtins.elem theme.name custom-themes)) {
-                # The theme should be considered a builtin theme 
-                theme = {
-                        enable = true;
-                        name = theme.name;
-                        style = theme.style;
-                };
-        };
+        config.vim = lib.mkIf (cfg.enable) (
+                if (theme.path != null) then
+                {
+                        theme = {
+                                enable = false;
+                        };
+
+                        extraPlugins = load-lush-theme (theme.path);
+                }
+                else if (builtins.elem theme.name custom-themes) then
+                {
+                        theme = {
+                                enable = false;
+                        };
+
+                        extraPlugins = load-lush-theme (./. + ("/" + theme.name));
+                }
+                else
+                {
+                        # The theme should be considered a builtin theme 
+                        theme = {
+                                enable = true;
+                                name = theme.name;
+                                style = theme.style;
+                        };
+                }
+        );
 }
