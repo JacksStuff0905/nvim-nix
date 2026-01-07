@@ -4,7 +4,7 @@ let
                 if (builtins.pathExists file) then
                         (builtins.readFile file)
                 else
-                        (builtins.readFile (builtins.trace path fallback));
+                        (builtins.readFile fallback);
 
         lush-theme =
                 if (theme.style == "dark") then
