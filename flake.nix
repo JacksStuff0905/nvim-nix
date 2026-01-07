@@ -49,6 +49,14 @@
         imports = [ 
                 nvf.nixosModules.default
                 ./configuration.nix
+
+                # Disable errors for the dummy run
+                ({lib, ...}:
+                {
+                  config.assertions = lib.mkForce [];
+                  config.warnings = lib.mkForce [];
+                  config._module.check = false;
+                })
         ];
 
 
@@ -84,6 +92,14 @@
         imports = [ 
                 nvf.homeManagerModules.default
                 ./configuration.nix
+                
+                # Disable errors for the dummy run
+                ({lib, ...}:
+                {
+                  config.assertions = lib.mkForce [];
+                  config.warnings = lib.mkForce [];
+                  config._module.check = false;
+                })
         ];
 
 
