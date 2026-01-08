@@ -50,9 +50,9 @@
                 nvf.nixosModules.default
         ];
 
-        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
+        config = {
                 programs.nvf = {
-                        enable = true;
+                        enable = config.programs.nvf.settings.nvim-nix.enable;
                         settings = {
                                 imports = [
                                         ./configuration.nix
@@ -73,9 +73,9 @@
                 nvf.homeManagerModules.default
         ];
         
-        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
+        config = {
                 programs.nvf = {
-                        enable = true;
+                        enable = config.programs.nvf.settings.nvim-nix.enable;
                         settings = {
                                 imports = [
                                         ./configuration.nix
