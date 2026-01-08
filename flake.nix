@@ -80,8 +80,9 @@ in
     (lib.mkIf (myNvimOptions != {}) {
       programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
     })
-  ];
+  ]
 )
+
                                 ];
                         };
                 };
