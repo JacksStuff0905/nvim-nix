@@ -52,7 +52,6 @@
 
         config = {
                 programs.nvf = {
-                        enable = config.programs.nvf.settings.nvim-nix.enable;
                         settings = {
                                 imports = [
                                         ./configuration.nix
@@ -61,9 +60,9 @@
                 };
 
                 # Set shell aliases
-                environment.shellAliases = lib.mkMerge (
+                environment.shellAliases = lib.mkIf (config.programs.nvf.enable) (lib.mkMerge (
                         builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvf.settings.nvim-nix.opts.aliases
-                );
+                ));
         };
       };
       
@@ -75,7 +74,6 @@
         
         config = {
                 programs.nvf = {
-                        enable = config.programs.nvf.settings.nvim-nix.enable;
                         settings = {
                                 imports = [
                                         ./configuration.nix
@@ -84,9 +82,9 @@
                 };
 
                 # Set shell aliases
-                home.shellAliases = lib.mkMerge (
+                home.shellAliases = lib.mkIf (config.programs.nvf.enable) (lib.mkMerge (
                         builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvf.settings.nvim-nix.opts.aliases
-                );
+                ));
         };
       };
     };
