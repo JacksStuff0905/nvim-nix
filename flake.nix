@@ -73,16 +73,15 @@
                         settings = {
                                 imports = [
                                         ./configuration.nix
-let
+(let
   myNvimOptions = lib.attrByPath ["programs" "nvim-nix"] {} config;
 in
-{
-  programs.nvf.settings = lib.mkMerge [
+  lib.mkMerge [
     (lib.mkIf (myNvimOptions != {}) {
       programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
     })
   ];
-})
+)
                                 ];
                         };
                 };
