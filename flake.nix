@@ -46,28 +46,6 @@
 
       # NixOS
       nixosModules.default = { config, pkgs, lib, ... }: {
-        imports = [ 
-                nvf.nixosModules.default
-                ./configuration.nix
-
-                # Disable errors for the dummy run
-                ({lib, ...}:
-                {
-                  config.assertions = lib.mkForce [];
-                  config.warnings = lib.mkForce [];
-                  config._module.check = lib.mkForce false;
-                })
-        ];
-
-
-        # Fix for the scope issues - a dummy option acting as a sink
-        options.vim = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = {};
-          visible = false;
-          internal = true;
-        };
-
         config = lib.mkIf config.programs.nvim-nix.enable {
                 programs.nvf = {
                         enable = true;
@@ -89,34 +67,24 @@
       
       # Home Manager
       homeManagerModules.default = { config, pkgs, lib, ... }: {
-        imports = [ 
-                nvf.homeManagerModules.default
-                ./configuration.nix
-                
-                # Disable errors for the dummy run
-                ({lib, ...}:
-                {
-                  config.assertions = lib.mkForce [];
-                  config.warnings = lib.mkForce [];
-                  config._module.check = lib.mkForce false;
-                })
-        ];
-
-
-        # Fix for the scope issues - a dummy option acting as a sink
-        options.vim = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = {};
-          visible = false;
-          internal = true;
-        };
-
         config = lib.mkIf config.programs.nvim-nix.enable {
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
+                                        ({ lib, config, ... }:
+
+let
+  myNvimOptions = lib.attrByPath ["programs" "nvim-nix"] {} config;
+in
+{
+  programs.nvf.settings = lib.mkMerge [
+    (lib.mkIf (myNvimOptions != {}) {
+      programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
+    })
+  ];
+})
                                 ];
 
                                 programs.nvim-nix = config.programs.nvim-nix;
