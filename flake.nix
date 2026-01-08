@@ -67,7 +67,7 @@
       
       # Home Manager
       homeManagerModules.default = { config, pkgs, lib, ... }: {
-        config = lib.mkIf config.programs.nvim-nix.enable {
+        config = lib.mkIf config.programs.nvf.settings.programs.nvim-nix.enable {
                 programs.nvf = {
                         enable = true;
                         settings = {
@@ -86,8 +86,6 @@ in
   ];
 })
                                 ];
-
-                                programs.nvim-nix = config.programs.nvim-nix;
                         };
                 };
 
