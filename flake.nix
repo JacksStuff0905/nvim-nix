@@ -46,8 +46,13 @@
 
       # NixOS
       nixosModules.default = { config, pkgs, lib, ... }: {
-        config = {
+        imports = [
+                nvf.nixosModules.default
+        ];
+
+        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
                 programs.nvf = {
+                        enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
@@ -64,8 +69,13 @@
       
       # Home Manager
       homeManagerModules.default = { config, pkgs, lib, ... }: {
-        config = {
+        imports = [
+                nvf.homeManagerModules.default
+        ];
+        
+        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
                 programs.nvf = {
+                        enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
