@@ -1,6 +1,6 @@
 {config, pkgs, lib, ...}:
 let
-        cfg = config.programs.nvim-nix;
+        cfg = config.nvim-nix;
 in
 {
         imports = [
@@ -12,7 +12,7 @@ in
                 ./modules/themes
         ];
 
-        options.programs.nvim-nix = {
+        options.nvim-nix = {
                 enable = lib.mkEnableOption "Enable the nvim-nix module";
         };
 

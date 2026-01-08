@@ -1,9 +1,9 @@
 {config, pkgs, lib, ...}:
 let
-        cfg = config.programs.nvim-nix.languages;
+        cfg = config.nvim-nix.languages;
 in
 {
-        options.programs.nvim-nix.languages = {
+        options.nvim-nix.languages = {
                 enable = lib.mkEnableOption "Enable the language / LSP module";
                 c = {
                         enable = lib.mkOption {

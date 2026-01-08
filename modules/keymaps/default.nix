@@ -1,12 +1,12 @@
 {config, lib, ...}:
 let
-        cfg = config.programs.nvim-nix.global-keymaps;
+        cfg = config.nvim-nix.global-keymaps;
 in
 {
         # Configure global keymaps here.
         # If a keymap is used for a plugin, it should be placed in the plugin's config instead.
 
-        options.programs.nvim-nix.global-keymaps = {
+        options.nvim-nix.global-keymaps = {
                 enable = lib.mkEnableOption "Enable global keymaps module";
 
                 window-navigation = {

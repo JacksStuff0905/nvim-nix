@@ -1,6 +1,6 @@
 {config, lib, pkgs, ...}:
 let
-        cfg = config.programs.nvim-nix.themes;
+        cfg = config.nvim-nix.themes;
 
         custom-themes = builtins.attrNames (builtins.readDir ./available-themes);
 
@@ -14,7 +14,7 @@ let
         
 in
 {
-        options.programs.nvim-nix.themes = {
+        options.nvim-nix.themes = {
                 enable = lib.mkEnableOption "Enable theme managment module";
 
                 

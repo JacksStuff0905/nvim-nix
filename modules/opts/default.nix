@@ -1,10 +1,10 @@
 {config, lib, pkgs, ...}:
 
 let
-        cfg = config.programs.nvim-nix.opts;
+        cfg = config.nvim-nix.opts;
 in
 {
-        options.programs.nvim-nix.opts = {
+        options.nvim-nix.opts = {
                 enable = lib.mkEnableOption "Enable the opts module";
 
                 aliases = lib.mkOption {

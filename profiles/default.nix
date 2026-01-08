@@ -8,13 +8,13 @@ in
                 ./basic.nix
         ];
 
-        options.programs.nvim-nix.profile = lib.mkOption {
+        options.nvim-nix.profile = lib.mkOption {
                 type = lib.types.enum [ "basic" "full" ];
                 default = "basic";
         };
 
 
-        config.programs.nvim-nix = {
+        config.nvim-nix = {
                 opts = {
                         enable = default true;
                 };

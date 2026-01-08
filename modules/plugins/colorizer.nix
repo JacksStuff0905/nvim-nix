@@ -2,10 +2,10 @@
 let
         name = "colorizer";
 
-        cfg = config.programs.nvim-nix.plugins.${name};
+        cfg = config.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.${name} = {
+        options.nvim-nix.plugins.${name} = {
                 enable = lib.mkEnableOption "Enable ${name} plugin module";
 
                 auto-attach = lib.mkOption {

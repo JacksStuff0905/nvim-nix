@@ -21,7 +21,7 @@
           
           modules = [ 
                 ./configuration.nix
-                {programs.nvim-nix.enable = true;}
+                {nvim-nix.enable = true;}
           ];
         };
       in {
@@ -31,7 +31,7 @@
         basic = (nvf.lib.neovimConfiguration (neovim-configuration
                 // {modules = neovim-configuration.modules ++ [
                     # Modules to be appended
-                    ({ ... }: { programs.nvim-nix.profile = "basic"; }) 
+                    ({ ... }: { nvim-nix.profile = "basic"; }) 
                 ];}
         )).neovim;
 
@@ -39,57 +39,45 @@
         full = (nvf.lib.neovimConfiguration (neovim-configuration
                 // {modules = neovim-configuration.modules ++ [
                     # Modules to be appended
-                    ({ ... }: { programs.nvim-nix.profile = "full"; }) 
+                    ({ ... }: { nvim-nix.profile = "full"; }) 
                 ];}
         )).neovim;
       });
 
       # NixOS
       nixosModules.default = { config, pkgs, lib, ... }: {
-        config = lib.mkIf config.programs.nvim-nix.enable {
+        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
                                 ];
-
-                                programs.nvim-nix = config.programs.nvim-nix;
                         };
                 };
 
                 # Set shell aliases
                 environment.shellAliases = lib.mkMerge (
-                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
+                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvf.settings.nvim-nix.opts.aliases
                 );
         };
       };
       
       # Home Manager
       homeManagerModules.default = { config, pkgs, lib, ... }: {
-        config = /*lib.mkIf config.programs.nvf.settings.programs.nvim-nix.enable*/ {
+        config = lib.mkIf config.programs.nvf.settings.nvim-nix.enable {
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
-(let
-  myNvimOptions = lib.attrByPath ["programs" "nvim-nix"] {} config;
-in
-  lib.mkMerge [
-    (lib.mkIf (myNvimOptions != {}) {
-      programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
-    })
-  ]
-)
-
                                 ];
                         };
                 };
 
                 # Set shell aliases
                 home.shellAliases = lib.mkMerge (
-                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvim-nix.opts.aliases
+                        builtins.map (alias: {"${alias}" = lib.getExe config.programs.nvf.finalPackage;}) config.programs.nvf.settings.nvim-nix.opts.aliases
                 );
         };
       };
