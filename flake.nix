@@ -67,27 +67,22 @@
       
       # Home Manager
       homeManagerModules.default = { config, pkgs, lib, ... }: {
-        imports = [
-                ({ lib, config, ... }:
-                let
-                  myNvimOptions = lib.attrByPath ["programs" "nvim-nix"] {} config;
-                in
-                {
-                  programs.nvf.enable = true;
-                  programs.nvf.settings = lib.mkMerge [
-                    (lib.mkIf (myNvimOptions != {}) {
-                      programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
-                    })
-                  ];
-                })
-        ];
-
         config = /*lib.mkIf config.programs.nvf.settings.programs.nvim-nix.enable*/ {
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
+let
+  myNvimOptions = lib.attrByPath ["programs" "nvim-nix"] {} config;
+in
+{
+  programs.nvf.settings = lib.mkMerge [
+    (lib.mkIf (myNvimOptions != {}) {
+      programs.nvim-nix = myNvimOptions; # copy HM options into nvf.settings
+    })
+  ];
+})
                                 ];
                         };
                 };
