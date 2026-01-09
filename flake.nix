@@ -81,10 +81,6 @@
                                         ./configuration.nix
                                 ];
 
-                                _modules.args = {
-                                        dirtytalkSrc = inputs.dirtytalk-src;
-                                };
-
                                 programs.nvim-nix = config.programs.nvim-nix;
                         };
                 };
@@ -103,6 +99,9 @@
                 ./configuration.nix
         ];
 
+        _modules.args = {
+                dirtytalkSrc = inputs.dirtytalk-src;
+        };
 
         # Fix for the scope issues - a dummy option acting as a sink
         options.vim = lib.mkOption {
