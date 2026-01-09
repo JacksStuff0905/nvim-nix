@@ -36,6 +36,8 @@ in
                         splash.enable = default true;
                         lualine.enable = default true;
                         rename.enable = default false;
+                        navigation.enable = default true;
+                        scrollbar.enable = default true;
                 };
 
                 languages = {

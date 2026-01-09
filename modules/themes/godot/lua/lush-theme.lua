@@ -140,6 +140,32 @@ local theme = lush(function(injected_functions)
 		--
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
+    -- Scrollbar
+    ScrollbarHandle { fg=Normal.fg, bg="#323B47", },
+
+    ScrollbarCursorHandle { fg=ScrollbarCursor.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarCursor { fg=ScrollbarHandle.fg, },
+    ScrollbarSearchHandle { fg=ScrollbarSearch.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarSearch { fg="#FFE792", },
+    ScrollbarErrorHandle { fg=ScrollbarError.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarError { fg="#F92672", },
+    ScrollbarWarnHandle { fg=ScrollbarWarn.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarWarn { fg="#E6DB74", },
+    ScrollbarInfoHandle { fg=ScrollbarInfo.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarInfo { fg="#75787D", },
+    ScrollbarHintHandle { fg=ScrollbarHint.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarHint { fg="#57B3FF", },
+    ScrollbarMiscHandle { fg=ScrollbarMisc.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarMisc { fg="#75787D", },
+
+    ScrollbarGitAddHandle { fg=ScrollbarGitAdd.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarGitAdd { fg="#A1FFE0", },
+    ScrollbarGitChangeHandle { fg=ScrollbarGitChange.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarGitChange { fg="#EF5939", },
+    ScrollbarGitDeleteHandle { fg=ScrollbarGitDelete.fg, bg=ScrollbarHandle.bg, },
+    ScrollbarGitDelete { fg="#960050", },
+
+
 		Comment        { fg="#75787D" }, -- Any comment
 
 		Constant      { fg = "#CDCFD2", bold = true }, -- (*) Any constant
