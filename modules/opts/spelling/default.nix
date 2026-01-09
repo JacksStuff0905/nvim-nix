@@ -1,4 +1,4 @@
-{config, lib, pkgs, dirtytalkSrc, ...}:
+{config, lib, pkgs, ...}:
 
 let
         cfg = config.programs.nvim-nix.opts.spelling;
