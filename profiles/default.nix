@@ -40,6 +40,7 @@ in
                         scrollbar.enable = default true;
 
                         undotree.enable = default true;
+                        treesitter.enable = default true;
                 };
 
                 languages = {
