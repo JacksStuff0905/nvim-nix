@@ -38,6 +38,8 @@ in
                         rename.enable = default false;
                         navigation.enable = default true;
                         scrollbar.enable = default true;
+
+                        undotree.enable = default true;
                 };
 
                 languages = {

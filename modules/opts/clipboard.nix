@@ -30,6 +30,6 @@ in
         };
 
         config.vim = lib.mkIf config.programs.nvim-nix.opts.enable {
-                clipboard = cfg;
+                clipboard = lib.mkIf config.programs.nvim-nix.opts.clipboard.enable cfg;
         };
 }
