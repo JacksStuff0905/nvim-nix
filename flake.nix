@@ -60,11 +60,6 @@
                 ./configuration.nix
         ];
 
-        _module.args = {
-                dirtytalkSrc = inputs.dirtytalk-src;
-        };
-
-
         # Fix for the scope issues - a dummy option acting as a sink
         options.vim = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
@@ -74,16 +69,16 @@
         };
 
         config = lib.mkIf config.programs.nvim-nix.enable {
+                _module.args = {
+                        dirtytalkSrc = inputs.dirtytalk-src;
+                };
+
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
                                 ];
-
-                                _module.args = {
-                                        dirtytalkSrc = inputs.dirtytalk-src;
-                                };
 
                                 programs.nvim-nix = config.programs.nvim-nix;
                         };
@@ -103,10 +98,6 @@
                 ./configuration.nix
         ];
 
-        _module.args = {
-                dirtytalkSrc = inputs.dirtytalk-src;
-        };
-
         # Fix for the scope issues - a dummy option acting as a sink
         options.vim = lib.mkOption {
           type = lib.types.attrsOf lib.types.anything;
@@ -116,16 +107,16 @@
         };
 
         config = lib.mkIf config.programs.nvim-nix.enable {
+                _module.args = {
+                        dirtytalkSrc = inputs.dirtytalk-src;
+                };
+
                 programs.nvf = {
                         enable = true;
                         settings = {
                                 imports = [
                                         ./configuration.nix
                                 ];
-
-                                _module.args = {
-                                        dirtytalkSrc = inputs.dirtytalk-src;
-                                };
 
                                 programs.nvim-nix = config.programs.nvim-nix;
                         };
