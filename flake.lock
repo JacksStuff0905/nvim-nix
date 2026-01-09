@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "dirtytalk-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1713047519,
+        "narHash": "sha256-azU5jkv/fD/qDDyCU1bPNXOH6rmbDauG9jDNrtIXc0Y=",
+        "owner": "psliwka",
+        "repo": "vim-dirtytalk",
+        "rev": "aa57ba902b04341a04ff97214360f56856493583",
+        "type": "github"
+      },
+      "original": {
+        "owner": "psliwka",
+        "repo": "vim-dirtytalk",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -130,6 +146,7 @@
     },
     "root": {
       "inputs": {
+        "dirtytalk-src": "dirtytalk-src",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf"
       }

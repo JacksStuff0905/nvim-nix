@@ -2,11 +2,16 @@
   description = "Portable nvim/nvf configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nvf.url = "github:notashelf/nvf";
+          nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+          nvf.url = "github:notashelf/nvf";
+
+          dirtytalk-src = {
+                  url = "github:psliwka/vim-dirtytalk";
+                  flake = false;
+          };
   };
 
-  outputs = { self, nixpkgs, nvf, ... }: 
+  outputs = { self, nixpkgs, nvf, ... }@inputs: 
     let
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       
@@ -18,7 +23,11 @@
         pkgs = nixpkgs.legacyPackages.${system};
         neovim-configuration = {
           inherit pkgs;
-          
+
+          extraSpecialArgs = {
+                  dirtytalkSrc = inputs.dirtytalk-src;
+          };         
+
           modules = [ 
                 ./configuration.nix
                 {programs.nvim-nix.enable = true;}
