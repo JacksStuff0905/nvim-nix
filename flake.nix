@@ -60,7 +60,7 @@
                 ./configuration.nix
         ];
 
-        _modules.args = {
+        _module.args = {
                 dirtytalkSrc = inputs.dirtytalk-src;
         };
 
@@ -80,6 +80,10 @@
                                 imports = [
                                         ./configuration.nix
                                 ];
+
+                                _module.args = {
+                                        dirtytalkSrc = inputs.dirtytalk-src;
+                                };
 
                                 programs.nvim-nix = config.programs.nvim-nix;
                         };
@@ -99,7 +103,7 @@
                 ./configuration.nix
         ];
 
-        _modules.args = {
+        _module.args = {
                 dirtytalkSrc = inputs.dirtytalk-src;
         };
 
@@ -118,6 +122,10 @@
                                 imports = [
                                         ./configuration.nix
                                 ];
+
+                                _module.args = {
+                                        dirtytalkSrc = inputs.dirtytalk-src;
+                                };
 
                                 programs.nvim-nix = config.programs.nvim-nix;
                         };
