@@ -13,6 +13,10 @@ in
         type = lib.types.bool;
         default = true;
       };
+      max-lines = lib.mkOption {
+        type = lib.types.int;
+        default = 2;
+      };
     };
 
     textobjects = {
@@ -90,6 +94,9 @@ in
 
         context = {
           enable = cfg.context.enable;
+          setupOpts = {
+            max_lines = cfg.context.max-lines;
+          };
         };
       };
     };
