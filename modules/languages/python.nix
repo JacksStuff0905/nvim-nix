@@ -1,8 +1,8 @@
 {config, lib, pkgs, ...}:
 
 let
-  name = "nix";
-  lsp-name = "nix";
+  name = "python";
+  lsp-name = "python";
 
   cfg = config.programs.nvim-nix.languages;
 in

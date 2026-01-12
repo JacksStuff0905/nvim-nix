@@ -1,13 +1,13 @@
 {config, lib, pkgs, ...}:
 
 let
-  name = "nix";
-  lsp-name = "nix";
+  name = "html";
+  lsp-name = "html";
 
   cfg = config.programs.nvim-nix.languages;
 in
 {
-  options.programs.nvim-nix.languages."${name}" = {
+  options.programs.nvim-nix.languages.web."${name}" = {
     enable = lib.mkOption {
       type = lib.types.bool;
       description = "Enable ${name} language module";
@@ -15,12 +15,16 @@ in
     };
   };
 
-  config.vim = lib.mkIf (cfg.enable && cfg."${name}".enable) {
+  config.vim = lib.mkIf (cfg.enable && cfg.web."${name}".enable) {
     languages."${lsp-name}" = {
       enable = true;
       treesitter.enable = cfg.treesitter;
       lsp.enable = cfg.lsp;
       format.enable = cfg.format;
+
+      extraDiagnostics = {
+        enable = true;
+      };
     };
   };
 }

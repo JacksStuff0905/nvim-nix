@@ -9,5 +9,9 @@ in
                         git.enable = lib.mkDefault true;
                         rename.enable = lib.mkDefault true;
                 };
+
+                languages = {
+                        enable = lib.mkDefault true;
+                };
         };
 }

@@ -1,11 +1,22 @@
-{config, pkgs, lib, ...}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.programs.nvim-nix.languages;
   file_to_not_import = [
-  "default.nix"
+    "default.nix"
   ];
 
-  get-import-dir = dir: ignore: import ../../util/get-import-dir.nix {inherit lib; inherit dir; inherit ignore;};
+  get-import-dir =
+    dir: ignore:
+    import ../../util/get-import-dir.nix {
+      inherit lib;
+      inherit dir;
+      inherit ignore;
+    };
 
 in
 {
@@ -21,8 +32,11 @@ in
       type = lib.types.bool;
       default = true;
     };
+    format = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
-
 
   config.vim = lib.mkIf cfg.enable {
     lsp.enable = cfg.lsp;

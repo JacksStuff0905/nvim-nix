@@ -1,8 +1,8 @@
 {config, lib, pkgs, ...}:
 
 let
-  name = "nix";
-  lsp-name = "nix";
+  name = "csharp";
+  lsp-name = "csharp";
 
   cfg = config.programs.nvim-nix.languages;
 in
@@ -20,7 +20,6 @@ in
       enable = true;
       treesitter.enable = cfg.treesitter;
       lsp.enable = cfg.lsp;
-      format.enable = cfg.format;
     };
   };
 }
