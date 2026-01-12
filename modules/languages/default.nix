@@ -36,9 +36,23 @@ in
       type = lib.types.bool;
       default = true;
     };
+    null-ls = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
+    };
+    completions = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
-  config.vim = lib.mkIf cfg.enable {
-    lsp.enable = cfg.lsp;
+  config = lib.mkIf cfg.enable {
+    vim = {
+      lsp.enable = cfg.lsp;
+      lsp.null-ls.enable = cfg.null-ls.enable;
+    };
+    programs.nvim-nix.plugins.completions.enable = cfg.completions;
   };
 }
