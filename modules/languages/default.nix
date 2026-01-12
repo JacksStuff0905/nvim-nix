@@ -25,6 +25,6 @@ in
 
 
   config.vim = lib.mkIf cfg.enable {
-    
+    lsp.enable = cfg.lsp;
   };
 }
