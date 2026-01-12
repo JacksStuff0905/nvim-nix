@@ -1,34 +1,30 @@
 {config, pkgs, lib, ...}:
 let
-        cfg = config.programs.nvim-nix.languages;
+  cfg = config.programs.nvim-nix.languages;
+  file_to_not_import = [
+  "default.nix"
+  ];
+
+  get-import-dir = dir: ignore: import ../../util/get-import-dir.nix {inherit lib; inherit dir; inherit ignore;};
+
 in
 {
-        options.programs.nvim-nix.languages = {
-                enable = lib.mkEnableOption "Enable the language / LSP module";
-                c = {
-                        enable = lib.mkOption {
-                                type = lib.types.bool;
-                                description = "Enable C language module";
-                                default = true;
-                        };
-                };
-                nix = {
-                        enable = lib.mkOption {
-                                type = lib.types.bool;
-                                description = "Enable nix language module";
-                                default = true;
-                        };
-                };
-        };
+  imports = get-import-dir ./. file_to_not_import;
+
+  options.programs.nvim-nix.languages = {
+    enable = lib.mkEnableOption "Enable the language / LSP module";
+    treesitter = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+    lsp = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+  };
 
 
-        config.vim = lib.mkIf cfg.enable {
-                languages.clang = lib.mkIf cfg.c.enable {
-                        enable = true;
-                };
-
-                languages.nix = lib.mkIf cfg.nix.enable {
-                        enable = true;
-                };
-        };
+  config.vim = lib.mkIf cfg.enable {
+    
+  };
 }

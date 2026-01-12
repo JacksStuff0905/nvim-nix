@@ -69,6 +69,7 @@ in
     config.vim = lib.mkIf cfg.enable {
       treesitter = {
         enable = true;
+        indent.enable = true;
         textobjects = {
           setupOpts = {
             enable = true;
