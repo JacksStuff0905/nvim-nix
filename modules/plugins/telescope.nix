@@ -1,96 +1,118 @@
-{config, lib, pkgs, ...}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-        name = "telescope";
+  name = "telescope";
 
-        cfg = config.programs.nvim-nix.plugins.${name};
+  cfg = config.programs.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.${name} = {
-                enable = lib.mkEnableOption "Enable ${name} plugin module";
+  options.programs.nvim-nix.plugins.${name} = {
+    enable = lib.mkEnableOption "Enable ${name} plugin module";
 
-                keymaps = {
-                        enable = lib.mkOption { type = lib.types.bool; default = true; };
+    keymaps = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
 
-                        find-files = {
-                                enable = lib.mkOption { type = lib.types.bool; default = true; };
-
-                                key = lib.mkOption {
-                                        type = lib.types.str;
-                                        default = "<leader>fd";
-                                };
-                        };
-
-                        live-grep = {
-                                enable = lib.mkOption { type = lib.types.bool; default = true; };
-
-                                key = lib.mkOption {
-                                        type = lib.types.str;
-                                        default = "<leader>gr";
-                                };
-                        };
-
-                        telescope = {
-                                enable = lib.mkOption { type = lib.types.bool; default = true; };
-
-                                key = lib.mkOption {
-                                        type = lib.types.str;
-                                        default = "<leader>tl";
-                                };
-                        };
-                };
+      find-files = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
         };
 
-	config.vim = lib.mkIf cfg.enable {
-                telescope = {
-                        enable = true;
-                        
-                        setupOpts = {
-                                pickers = {
-                                        find_files = {
-                                                hidden = true;
-                                        };
-                                };
-                        };
-                };
+        key = lib.mkOption {
+          type = lib.types.str;
+          default = "<leader>fd";
+        };
+      };
 
-                extraPlugins = with pkgs.vimPlugins; {
-                        telescope-ui-select = {
-                                package = pkgs.vimPlugins.telescope-ui-select-nvim ;
-                        };
-                };
+      live-grep = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+        };
 
-                
-                luaConfigRC.telescope-ui-select = ''
-                        require("telescope").setup({
-                                extensions = {
-                                        ["ui-select"] = {
-                                                require("telescope.themes").get_dropdown({}),
-                                        },
-                                },
-                        })
-                        require("telescope").load_extension("ui-select")
-                '';
+        key = lib.mkOption {
+          type = lib.types.str;
+          default = "<leader>gr";
+        };
+      };
 
-                # Keybinds
-                keymaps = lib.mkIf cfg.keymaps.enable [
-                        (lib.mkIf cfg.keymaps.find-files.enable {
-                                 key = cfg.keymaps.find-files.key;
-                                 mode = "n";
-                                 silent = true;
-                                 action = ":Telescope find_files<CR>";
-                        })
-                        (lib.mkIf cfg.keymaps.live-grep.enable {
-                                 key = cfg.keymaps.live-grep.key;
-                                 mode = "n";
-                                 silent = true;
-                                 action = ":Telescope live_grep<CR>";
-                        })
-                        (lib.mkIf cfg.keymaps.telescope.enable {
-                                 key = cfg.keymaps.telescope.key;
-                                 mode = "n";
-                                 silent = true;
-                                 action = ":Telescope<CR>";
-                        })
-                ];
-	};
+      telescope = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+        };
+
+        key = lib.mkOption {
+          type = lib.types.str;
+          default = "<leader>tl";
+        };
+      };
+    };
+  };
+
+  config.vim = lib.mkIf cfg.enable {
+    # Extra dependencies
+    extraPackages = with pkgs; [
+      fd
+      ripgrep
+    ];
+
+    telescope = {
+      enable = true;
+
+      setupOpts = {
+        pickers = {
+          find_files = {
+            hidden = true;
+          };
+        };
+      };
+    };
+
+    extraPlugins = with pkgs.vimPlugins; {
+      telescope-ui-select = {
+        package = pkgs.vimPlugins.telescope-ui-select-nvim;
+      };
+    };
+
+    luaConfigRC.telescope-ui-select = ''
+      require("telescope").setup({
+              extensions = {
+                      ["ui-select"] = {
+                              require("telescope.themes").get_dropdown({}),
+                      },
+              },
+      })
+      require("telescope").load_extension("ui-select")
+    '';
+
+    # Keybinds
+    keymaps = lib.mkIf cfg.keymaps.enable [
+      (lib.mkIf cfg.keymaps.find-files.enable {
+        key = cfg.keymaps.find-files.key;
+        mode = "n";
+        silent = true;
+        action = ":Telescope find_files<CR>";
+      })
+      (lib.mkIf cfg.keymaps.live-grep.enable {
+        key = cfg.keymaps.live-grep.key;
+        mode = "n";
+        silent = true;
+        action = ":Telescope live_grep<CR>";
+      })
+      (lib.mkIf cfg.keymaps.telescope.enable {
+        key = cfg.keymaps.telescope.key;
+        mode = "n";
+        silent = true;
+        action = ":Telescope<CR>";
+      })
+    ];
+  };
 }
