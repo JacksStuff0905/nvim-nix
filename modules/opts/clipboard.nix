@@ -30,13 +30,6 @@ in
   };
 
   config.vim = lib.mkIf (config.programs.nvim-nix.opts.enable && cfg.enable) {
-
-    # Extra dependencies
-    extraPackages = with pkgs; lib.mkMerge [
-      [(lib.mkIf cfg.providers.wl-copy.enable wl-clipboard)]
-      [(lib.mkIf cfg.providers.xclip.enable xclip)]
-    ];
-
     clipboard = cfg;
   };
 }
