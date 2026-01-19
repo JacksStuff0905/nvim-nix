@@ -1,71 +1,78 @@
-{config, lib, pkgs, ...}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-        name = "undotree";
+  name = "undotree";
 
-        cfg = config.programs.nvim-nix.plugins.${name};
+  cfg = config.programs.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.${name} = {
-                enable = lib.mkEnableOption "Enable ${name} plugin module";
+  options.programs.nvim-nix.plugins.${name} = {
+    enable = lib.mkEnableOption "Enable ${name} plugin module";
 
-                layout = {
-                        tree = lib.mkOption {
-                                type = lib.types.enum ["left" "right"];
-                                default = "right";
-                        };
-                        diff = lib.mkOption {
-                                type = lib.types.enum ["attached" "bottom"];
-                                default = "attached";
-                        };
-                };
+    layout = {
+      tree = lib.mkOption {
+        type = lib.types.enum [
+          "left"
+          "right"
+        ];
+        default = "right";
+      };
+      diff = lib.mkOption {
+        type = lib.types.enum [
+          "attached"
+          "bottom"
+        ];
+        default = "attached";
+      };
+    };
 
-                keymaps = {
-                        enable = lib.mkOption {
-                                type = lib.types.bool;
-                                default = true;
-                        };
+    keymaps = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
 
-                        toggle = {
-                                enable = lib.mkOption {
-                                        type = lib.types.bool;
-                                        default = true;
-                                };
-
-                                key = lib.mkOption {
-                                        type = lib.types.str;
-                                        default = "<leader>ut";
-                                };
-                        };
-                };
+      toggle = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
         };
 
-	config.vim = lib.mkIf cfg.enable {
-                utility.undotree = {
-                        enable = true;
-                };
+        key = lib.mkOption {
+          type = lib.types.str;
+          default = "<leader>ut";
+        };
+      };
+    };
+  };
 
-                globals = {
-                        undotree_WindowLayout =
-                                if (cfg.layout.tree == "left") then
-                                        if (cfg.layout.diff == "attached") then
-                                                1
-                                        else
-                                                2
-                                else
-                                        if (cfg.layout.diff == "attached") then
-                                                3
-                                        else
-                                                4;
-                };
+  config.vim = lib.mkIf cfg.enable {
+    utility.undotree = {
+      enable = true;
+    };
 
-                # Keybinds
-                keymaps = lib.mkIf cfg.keymaps.enable [
-                        (lib.mkIf cfg.keymaps.toggle.enable {
-                                 key = cfg.keymaps.toggle.key;
-                                 mode = "n";
-                                 silent = true;
-                                 action = ":UndotreeToggle<CR>";
-                        })
-                ];
-	};
+    globals = {
+      undotree_WindowLayout =
+        if (cfg.layout.tree == "left") then
+          if (cfg.layout.diff == "attached") then 1 else 2
+        else if (cfg.layout.diff == "attached") then
+          3
+        else
+          4;
+    };
+
+    # Keybinds
+    keymaps = lib.mkIf cfg.keymaps.enable [
+      (lib.mkIf cfg.keymaps.toggle.enable {
+        key = cfg.keymaps.toggle.key;
+        mode = "n";
+        silent = true;
+        action = ":UndotreeToggle<CR>";
+      })
+    ];
+  };
 }

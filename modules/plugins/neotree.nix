@@ -1,56 +1,61 @@
-{config, pkgs, lib, ...}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-        name = "neo-tree";
+  name = "neo-tree";
 
-        cfg = config.programs.nvim-nix.plugins.${name};
+  cfg = config.programs.nvim-nix.plugins.${name};
 in
 {
-        options.programs.nvim-nix.plugins.${name} = {
-                enable = lib.mkEnableOption "Enable ${name} plugin module";
-                keymaps = {
-                        enable = lib.mkOption {
-                                type = lib.types.bool;
-                                default = true;
-                        };
+  options.programs.nvim-nix.plugins.${name} = {
+    enable = lib.mkEnableOption "Enable ${name} plugin module";
+    keymaps = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+      };
 
-                        toggle = {
-                                enable = lib.mkOption {
-                                        type = lib.types.bool;
-                                        default = true;
-                                };
-
-                                key = lib.mkOption {
-                                        type = lib.types.str;
-                                        default = "<leader>fs";
-                                };
-                        };
-                };
+      toggle = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
         };
 
-	config.vim = lib.mkIf cfg.enable {
-                filetree.neo-tree = {
-                        enable = true;
-                        setupOpts = {
-                                filesystem = {
-                                        filtered_items = {
-                                                visible = true; # This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
-                                                hide_dotfiles = false;
-                                                hide_gitignored = true;
-                                        };
-                                };
-                                
-                                enable_cursor_hijack = true;
-                        };
-                };
+        key = lib.mkOption {
+          type = lib.types.str;
+          default = "<leader>fs";
+        };
+      };
+    };
+  };
 
-                # Keybinds
-                keymaps = lib.mkIf cfg.keymaps.enable [
-                        (lib.mkIf cfg.keymaps.toggle.enable {
-                                 key = cfg.keymaps.toggle.key;
-                                 mode = "n";
-                                 silent = true;
-                                 action = ":Neotree filesystem toggle left<CR>";
-                        })
-                ];
-	};
+  config.vim = lib.mkIf cfg.enable {
+    filetree.neo-tree = {
+      enable = true;
+      setupOpts = {
+        filesystem = {
+          filtered_items = {
+            visible = true; # This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
+            hide_dotfiles = false;
+            hide_gitignored = true;
+          };
+        };
+
+        enable_cursor_hijack = true;
+      };
+    };
+
+    # Keybinds
+    keymaps = lib.mkIf cfg.keymaps.enable [
+      (lib.mkIf cfg.keymaps.toggle.enable {
+        key = cfg.keymaps.toggle.key;
+        mode = "n";
+        silent = true;
+        action = ":Neotree filesystem toggle left<CR>";
+      })
+    ];
+  };
 }

@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   name = "git";
 
@@ -70,6 +70,11 @@ in
   };
 
   config.vim = lib.mkIf cfg.enable {
+    # Extra dependencies
+    extraPackages = with pkgs; [
+      git
+    ];
+
     git = {
       gitsigns = {
         enable = cfg.gitsigns.enable;
