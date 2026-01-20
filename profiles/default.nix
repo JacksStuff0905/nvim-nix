@@ -6,19 +6,18 @@
 }:
 let
   default = val: lib.mkOverride 1001 val;
+
+  available-profiles = lib.flatten (lib.pipe ./. [ 
+    builtins.readDir
+    (lib.filterAttrs (name: type: name != "default.nix"))
+    (lib.mapAttrsToList (name: type: lib.removeSuffix ".nix" name))
+  ]);
 in
 {
-  imports = [
-    ./full.nix
-    ./basic.nix
-    ./devbox.nix
-  ];
+  imports = (builtins.map (prof: (./. + ("/" + prof + ".nix"))) available-profiles);
 
   options.programs.nvim-nix.profile = lib.mkOption {
-    type = lib.types.enum [
-      "basic"
-      "full"
-    ];
+    type = lib.types.enum available-profiles;
     default = "basic";
   };
 
