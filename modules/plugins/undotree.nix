@@ -51,6 +51,11 @@ in
   };
 
   config.vim = lib.mkIf cfg.enable {
+    # Extra dependencies
+    extraPackages = with pkgs; [
+      diffutils
+    ];
+
     utility.undotree = {
       enable = true;
     };
