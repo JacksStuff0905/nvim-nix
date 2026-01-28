@@ -2,7 +2,7 @@
 
 let
   name = "gdscript";
-  lsp-name = "gdscript";
+  lsp-name = "godot";
 
   cfg = config.programs.nvim-nix.languages;
 in
@@ -20,12 +20,12 @@ in
       enable = true;
       highlight.enable = true;
       
-      grammars = [ pkgs.vimPlugins.nvim-treesitter-parsers.gdscript ];
+      grammars = [ pkgs.vimPlugins.nvim-treesitter-parsers."${name}" ];
     };
 
-    lsp.lspconfig.sources.gdscript = ''
-      require("lspconfig").gdscript.setup({
-        name = "godot",
+    lsp.lspconfig.sources."${name}" = ''
+      require("lspconfig")."${name}".setup({
+        name = "${lsp-name}",
         cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
         
         -- When client attaches
