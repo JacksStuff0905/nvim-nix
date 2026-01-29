@@ -117,19 +117,14 @@ in
           ];
         };
 
-        # Define where completion items come from
         sources = {
-          # 'lsp' gives you code suggestions
-          # 'snippets' gives you pre-defined snippets (like friendly-snippets)
           default = [ "lsp" "snippets" "path" "buffer" ];
         };
 
-        # Connect Blink to Luasnip
         snippets = {
           preset = "luasnip";
         };
         
-        # Optional: Make sure the documentation window is enabled to see snippet previews
         completion.documentation.auto_show = true;
       };
 
