@@ -33,6 +33,11 @@ in
   };
 
   config.vim = lib.mkIf cfg.enable {
+    # Extra dependencies
+    extraPackages = with pkgs; [
+      git
+    ];
+
     filetree.neo-tree = {
       enable = true;
       setupOpts = {
