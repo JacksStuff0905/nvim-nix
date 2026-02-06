@@ -7,6 +7,7 @@ in
     ./html.nix
     ./css.nix
     ./js-ts.nix
+    ./php.nix
   ];
 
   options.programs.nvim-nix.languages.web = {
