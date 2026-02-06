@@ -47,60 +47,55 @@
               { programs.nvim-nix.enable = true; }
             ];
           };
+
+          caskaydiaFont = pkgs.nerd-fonts.caskaydia-cove;
+
+          makeNeovim =
+            profile:
+            pkgs.symlinkJoin {
+              name = "nvim";
+              nativeBuildInputs = [ pkgs.makeWrapper ];
+              paths = [
+                (nvf.lib.neovimConfiguration (
+                  neovim-configuration
+                  // {
+                    modules = neovim-configuration.modules ++ [
+                      # Modules to be appended
+                      (
+                        { ... }:
+                        {
+                          programs.nvim-nix.profile = profile;
+                        }
+                      )
+                    ];
+                  }
+                )).neovim
+              ];
+
+              postBuild = ''
+                wrapProgram $out/bin/nvim \
+                --set FONTCONFIG_FILE ${pkgs.writeText "fonts.conf" ''
+                  <?xml version="1.0"?>
+                  <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+                  <fontconfig>
+                    <dir>${caskaydiaFont}/share/fonts</dir>
+                    <cachedir>/tmp/fontconfig-cache</cachedir>
+                  </fontconfig>
+                ''}
+              '';
+            };
         in
         {
           default = (nvf.lib.neovimConfiguration (neovim-configuration)).neovim;
 
           # Basic profile - run with #basic
-          basic =
-            (nvf.lib.neovimConfiguration (
-              neovim-configuration
-              // {
-                modules = neovim-configuration.modules ++ [
-                  # Modules to be appended
-                  (
-                    { ... }:
-                    {
-                      programs.nvim-nix.profile = "basic";
-                    }
-                  )
-                ];
-              }
-            )).neovim;
+          basic = makeNeovim "basic";
 
           # Full profile - run with #full
-          full =
-            (nvf.lib.neovimConfiguration (
-              neovim-configuration
-              // {
-                modules = neovim-configuration.modules ++ [
-                  # Modules to be appended
-                  (
-                    { ... }:
-                    {
-                      programs.nvim-nix.profile = "full";
-                    }
-                  )
-                ];
-              }
-            )).neovim;
+          full = makeNeovim "full";
 
           # DevBox profile - run with #devbox
-          devbox =
-            (nvf.lib.neovimConfiguration (
-              neovim-configuration
-              // {
-                modules = neovim-configuration.modules ++ [
-                  # Modules to be appended
-                  (
-                    { ... }:
-                    {
-                      programs.nvim-nix.profile = "devbox";
-                    }
-                  )
-                ];
-              }
-            )).neovim;
+          devbox = makeNeovim "devbox";
         }
       );
 
