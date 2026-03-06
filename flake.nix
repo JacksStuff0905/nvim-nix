@@ -3,7 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nvf.url = "github:notashelf/nvf";
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     dirtytalk-src = {
       url = "github:psliwka/vim-dirtytalk";
@@ -27,9 +30,9 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
+
     in
     {
-
       # Standalone
       packages = forAllSystems (
         system:
@@ -54,6 +57,7 @@
             profile:
             pkgs.symlinkJoin {
               name = "nvim";
+              pname = "nvim";
               nativeBuildInputs = [ pkgs.makeWrapper ];
               paths = [
                 (nvf.lib.neovimConfiguration (
