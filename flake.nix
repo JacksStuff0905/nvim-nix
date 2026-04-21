@@ -78,6 +78,12 @@
 
               postBuild = ''
                 wrapProgram $out/bin/nvim \
+                --prefix PATH : ${
+                  pkgs.lib.makeBinPath [
+                    pkgs.phpactor
+                    pkgs.php
+                  ]
+                } \
                 --set FONTCONFIG_FILE ${pkgs.writeText "fonts.conf" ''
                   <?xml version="1.0"?>
                   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
