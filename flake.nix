@@ -70,7 +70,6 @@
                       (
                         { ... }:
                         {
-                          meta.mainProgram = "nvim";
                           programs.nvim-nix.profile = profile;
                         }
                       )
