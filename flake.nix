@@ -47,7 +47,9 @@
 
             modules = [
               ./configuration.nix
-              { programs.nvim-nix.enable = true; }
+              {
+                programs.nvim-nix.enable = true;
+              }
             ];
           };
 
@@ -68,6 +70,7 @@
                       (
                         { ... }:
                         {
+                          meta.mainProgram = "nvim";
                           programs.nvim-nix.profile = profile;
                         }
                       )
