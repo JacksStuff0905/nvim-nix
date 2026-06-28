@@ -57,7 +57,7 @@
 
           makeNeovim =
             profile:
-            pkgs.symlinkJoin {
+            (pkgs.symlinkJoin {
               name = "nvim";
               pname = "nvim";
               nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -70,7 +70,6 @@
                       (
                         { ... }:
                         {
-                          meta.mainProgram = "nvim";
                           programs.nvim-nix.profile = profile;
                         }
                       )
@@ -96,6 +95,9 @@
                   </fontconfig>
                 ''}
               '';
+            })
+            // {
+              meta.mainProgram = "nvim";
             };
         in
         {
