@@ -2,7 +2,7 @@
 
 let
   name = "js-ts";
-  lsp-name = "ts";
+  lsp-name = "typescript";
 
   cfg = config.programs.nvim-nix.languages;
 in
