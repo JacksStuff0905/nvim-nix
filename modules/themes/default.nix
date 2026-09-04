@@ -28,7 +28,6 @@ in
     theme = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "godot";
       };
       style = lib.mkOption {
         type = lib.types.enum [
@@ -52,6 +51,12 @@ in
         };
 
         extraPlugins = load-lush-theme (theme.path);
+      }
+    else if (theme ? name) then
+      {
+        theme = {
+          enable = true;
+        };
       }
     else if (builtins.elem theme.name custom-themes) then
       {
