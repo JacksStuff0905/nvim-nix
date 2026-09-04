@@ -12,7 +12,6 @@ in
 	config.vim = lib.mkIf cfg.enable {
                 statusline.lualine = {
                         enable = true;
-                        theme = "auto";
                 };
 
 	};
