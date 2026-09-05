@@ -27,7 +27,8 @@ in
 
     theme = {
       name = lib.mkOption {
-        type = lib.types.str;
+        type = lib.types.nullOr lib.types.str;
+        default = null;
       };
       style = lib.mkOption {
         type = lib.types.enum [
@@ -52,7 +53,7 @@ in
 
         extraPlugins = load-lush-theme (theme.path);
       }
-    else if (theme ? name) then
+    else if (theme.name == null) then
       {
         theme = {
           enable = true;
